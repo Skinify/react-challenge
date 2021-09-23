@@ -1,14 +1,16 @@
 import Box from '../components/Box'
 import { useState } from 'react';
-import {Radio, RadioGroup, FormControlLabel, TextField} from '@material-ui/core';
+import {Radio, RadioGroup, FormControlLabel, TextField, FormLabel} from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import NextButton from '../components/NextButton';
 import questionsEnum from '../enums/questionsEnum';
+import questionsConfig from '../config/questions.json'
 
 export default () =>{
         const [ questionsNumber, setQuestionsNumber] = useState(15);
         const [ customValue, setCustomValue ] = useState(1);
         const [ selectedOption, setSelectedOption ] = useState("easy");
+
         const history = useHistory();
 
         const handleRadio = (e) => {
@@ -22,13 +24,13 @@ export default () =>{
         }
 
         const handleCustomInput = (e) => {
-                if(e.target.value < 1){
-                        setCustomValue(1)
-                        setQuestionsNumber(1)
+                if(e.target.value < questionsConfig.MIN_VALUE){
+                        setCustomValue(questionsConfig.MIN_VALUE)
+                        setQuestionsNumber(questionsConfig.MIN_VALUE)
                 }
-                else if(e.target.value > 50){
-                        setCustomValue(50)
-                        setQuestionsNumber(50)
+                else if(e.target.value > questionsConfig.MIN_VALUE){
+                        setCustomValue(questionsConfig.MAX_VALUE)
+                        setQuestionsNumber(questionsConfig.MAX_VALUE)
 
                 }else{
                         setCustomValue(e.target.value)
@@ -42,7 +44,7 @@ export default () =>{
                 <>
                         <div>
                                 <FormControlLabel value={questionsEnum.CUSTOM} control={<Radio />} label="Customizado" />
-                                <TextField disabled={selectedOption !== "custom"} value={customValue} type="number" min="1" InputProps={{ inputProps: { min: 1, max: 100 } }} onChange={(e) => handleCustomInput(e)}/>
+                                <FormControlLabel labelPlacement="end" value={questionsEnum.CUSTOM} control={<TextField style={{margin:'0 6px'}} disabled={selectedOption !== "custom"} value={customValue} type="number" min="1" InputProps={{ inputProps: { min: 1, max: 100 } }} onChange={(e) => handleCustomInput(e)}/>} label={customValue < 2 ? "pergunta" : "perguntas" } />
                         </div>
                 </>
                 )
@@ -52,8 +54,9 @@ export default () =>{
             <Box                 
             initial={{  opacity: 0 }}
             animate={{ opacity: 1  }}
+            exit={{ opacity: 0 }}
             title="Qual é o seu nivel de conhecimento geral ?"
-            subtitle="Escolha alguma das opções abaixo"
+            subtitle="Escolha a dificuldade do teste"
             >
         <RadioGroup 
                 defaultValue={questionsEnum.EASY}
@@ -61,9 +64,9 @@ export default () =>{
                 value={selectedOption}
 
                 >
-                <FormControlLabel value={questionsEnum.EASY} control={<Radio/>} label="Fácil" />
-                <FormControlLabel value={questionsEnum.NORMAL} control={<Radio />} label="Normal" />
-                <FormControlLabel value={questionsEnum.HARD} control={<Radio />} label="Difícil" />
+                <FormControlLabel value={questionsEnum.EASY} control={<Radio/>} label={`Fácil (15 perguntas)`} />
+                <FormControlLabel value={questionsEnum.NORMAL} control={<Radio />} label={`Normal (20 perguntas)`}  />
+                <FormControlLabel value={questionsEnum.HARD} control={<Radio />} label={`Difícil (30 perguntas)`}  />
                 <CustomLevelInput/>
          </RadioGroup>
                 <NextButton 

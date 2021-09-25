@@ -43,8 +43,8 @@ export default () =>{
                 return (
                 <>
                         <div>
-                                <FormControlLabel value={questionsEnum.CUSTOM} control={<Radio />} label="Customizado" />
-                                <FormControlLabel labelPlacement="end" value={questionsEnum.CUSTOM} control={<TextField style={{margin:'0 6px'}} disabled={selectedOption !== "custom"} value={customValue} type="number" min="1" InputProps={{ inputProps: { min: 1, max: 100 } }} onChange={(e) => handleCustomInput(e)}/>} label={customValue < 2 ? "pergunta" : "perguntas" } />
+                                <FormControlLabel value={questionsEnum.CUSTOM} control={<Radio />} label="Custom" />
+                                <FormControlLabel labelPlacement="end" value={questionsEnum.CUSTOM} control={<TextField style={{margin:'0 6px'}} disabled={selectedOption !== "custom"} value={customValue} type="number" min="1" InputProps={{ inputProps: { min: 1, max: 100 } }} onChange={(e) => handleCustomInput(e)}/>} label={customValue < 2 ? "question" : "questions" } />
                         </div>
                 </>
                 )
@@ -55,8 +55,8 @@ export default () =>{
             initial={{  opacity: 0 }}
             animate={{ opacity: 1  }}
             exit={{ opacity: 0 }}
-            title="Qual é o seu nivel de conhecimento geral ?"
-            subtitle="Escolha a dificuldade do teste"
+            title="What is your level of general knowledge ?"
+            subtitle="Choose a difficulty"
             >
         <RadioGroup 
                 defaultValue={questionsEnum.EASY}
@@ -64,9 +64,9 @@ export default () =>{
                 value={selectedOption}
 
                 >
-                <FormControlLabel value={questionsEnum.EASY} control={<Radio/>} label={`Fácil (15 perguntas)`} />
-                <FormControlLabel value={questionsEnum.NORMAL} control={<Radio />} label={`Normal (20 perguntas)`}  />
-                <FormControlLabel value={questionsEnum.HARD} control={<Radio />} label={`Difícil (30 perguntas)`}  />
+                <FormControlLabel value={questionsEnum.EASY} control={<Radio/>} label={`Easy (15 questions)`} />
+                <FormControlLabel value={questionsEnum.NORMAL} control={<Radio />} label={`Normal (20 questions)`}  />
+                <FormControlLabel value={questionsEnum.HARD} control={<Radio />} label={`Hard (30 questions)`}  />
                 <CustomLevelInput/>
          </RadioGroup>
                 <NextButton 
@@ -75,7 +75,7 @@ export default () =>{
                         color="primary"
                         onClick={() => history.push(`/Questions/${questionsNumber}`)}
                         >
-                        Continuar
+                        Next
                 </NextButton>
             </Box>
     )

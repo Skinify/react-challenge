@@ -19,25 +19,15 @@ export default ({quest, questNumber, nextQuestion}) =>{
     const [result, setResult] = useState(null)
 
     useEffect(() => {
-        setSelectedAwnser(allAwnsers[0]);
-        setLock(false);
         setResult(null);
         let p = [...incorrect_answers]
         p.push(correct_answer)
         setAllAwnsers(p.shuffle())
+        setSelectedAwnser(p[0]);
+        setLock(false);
     }, [questNumber])
 
     const style = styles();
-
-    const displayResult = () => {
-        if(result === null)
-            return null;
-        else if(result)
-            return <Typography variant="h6" className={style.awnserResolution}>Resposta correta</Typography> 
-        else
-            return <Typography variant="h6" className={style.awnserResolution}>Resposta incorreta</Typography> 
-        
-    }
 
     const handleQuestType = (questType) =>{
         switch(questType){
@@ -78,17 +68,24 @@ export default ({quest, questNumber, nextQuestion}) =>{
             case questionsType.BOOLEAN:{
                 return (
                     <ButtonGroup className={style.buttonGroup}>
-                        <Button size="large" variant="contained" color="primary" disabled={lock}
-                        onClick={() => { setResult('True' === correct_answer); setLock(true) }}> True </Button>
-                        <Button size="large" variant="contained" color="secondary" disabled={lock}
-                         onClick={() => { setResult('False' === correct_answer); setLock(true) }}> False </Button>
+                        {renderBoolButton('True')}
+                        {renderBoolButton('False')}
                     </ButtonGroup>
                 );
             }
         }
     }
 
-
+    const renderBoolButton = (e) =>{
+        if(lock === false)
+            return (
+                <Button size="large" variant="contained" color='primary' disabled={lock} 
+                        onClick={() => { setResult(e === correct_answer); setLock(true) }}> {e} </Button>
+            )
+        else 
+            return (<Button size="large" variant="contained" style={{backgroundColor: e === correct_answer ? '#2ECC71' : '#C0392B'}} disabled={lock} 
+                        onClick={() => { setResult(e === correct_answer); setLock(true) }}> {e} </Button>)
+    }
 
     return(
         <Box
@@ -99,7 +96,6 @@ export default ({quest, questNumber, nextQuestion}) =>{
             subtitle={htmlDecoderService(category)}
         >
             {handleQuestType(type)}
-            
             { lock && 
             <NextButton
                 size="large"

@@ -5,6 +5,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { useState } from 'react';
 import questionsValidatorService from '../services/questionsValidatorService'
 import endpoints from '../config/endpoints.json'
+import Loading from '../components/Loading'
 import axios from 'axios';
 
 export default () => {
@@ -21,7 +22,6 @@ export default () => {
         setLoading(false)
     }
 
-
     if(questionsValidatorService(questionsNumber)){
         if(allQuestions.length === 0 && loading === false){
             downloadQuestions(questionsNumber)
@@ -33,7 +33,7 @@ export default () => {
             )
         }else{
             return (
-                <a>Baixando</a>
+                <Loading text="Loading questions"/>
             )
         }
     }else{

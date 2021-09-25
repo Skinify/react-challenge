@@ -12,10 +12,12 @@ export default () => {
     const history = useHistory();
     const [ allQuestions, setAllQuestions ] = useState([])
     const [ loading, setLoading ] = useState(false);
+    const [ currentQuest, setCurrentQuest ] = useState(1);
 
     const downloadQuestions = async (n) =>{
         setLoading(true)
         const resp = await axios.get(`${endpoints.QUESTIONS_ENDPOINT}amount=${n}`)
+        console.log(resp);
         setAllQuestions(resp.data.results);
         setLoading(false)
     }
@@ -27,14 +29,7 @@ export default () => {
         
         if(allQuestions.length > 0 && loading === false){
             return(
-                <Box
-                initial={{  opacity: 0 }}
-                animate={{ opacity: 1  }}
-                exit={{ opacity: 0 }}
-                >
-                    <Question quest={allQuestions[0]}/>
-                    <a>{questionsNumber}</a>
-                </Box>
+                <Question questNumber={currentQuest} quest={allQuestions[currentQuest]}/>
             )
         }else{
             return (

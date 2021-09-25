@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography';
 
 export default (props) => {
   const style = styles();
+  console.log(props.subtitle)
   return (
     <motion.div className={style.container} {...props}>
       {

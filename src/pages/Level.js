@@ -3,7 +3,7 @@ import { useState } from 'react';
 import {Radio, RadioGroup, FormControlLabel, TextField, FormLabel} from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import NextButton from '../components/NextButton';
-import questionsEnum from '../enums/questionsEnum';
+import questionsEnum from '../enums/questionsDifficultEnum';
 import questionsConfig from '../config/questions.json'
 
 export default () =>{

@@ -29,7 +29,7 @@ export default () => {
         
         if(allQuestions.length > 0 && loading === false){
             return(
-                <Question questNumber={currentQuest} quest={allQuestions[currentQuest]}/>
+                <Question questNumber={currentQuest} quest={allQuestions[currentQuest]} nextQuestion={() => setCurrentQuest(currentQuest + 1)}/>
             )
         }else{
             return (

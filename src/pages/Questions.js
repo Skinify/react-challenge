@@ -11,21 +11,21 @@ export default () => {
     const { questionsNumber } = useParams();
     const history = useHistory();
     const [ allQuestions, setAllQuestions ] = useState([])
+    const [ loading, setLoading ] = useState(false);
 
     const downloadQuestions = async (n) =>{
+        setLoading(true)
         const resp = await axios.get(`${endpoints.QUESTIONS_ENDPOINT}amount=${n}`)
-        console.log(resp.data)
         setAllQuestions(resp.data.results);
+        setLoading(false)
     }
 
     if(questionsValidatorService(questionsNumber)){
-        console.log(allQuestions.length)
-        if(allQuestions.length === 0){
+        if(allQuestions.length === 0 && loading === false){
             downloadQuestions(questionsNumber)
-            return (
-                <a>Baixando</a>
-            )
-        }else{
+        }
+        
+        if(allQuestions.length > 0 && loading === false){
             return(
                 <Box
                 initial={{  opacity: 0 }}
@@ -35,6 +35,10 @@ export default () => {
                     <Question quest={allQuestions[0]}/>
                     <a>{questionsNumber}</a>
                 </Box>
+            )
+        }else{
+            return (
+                <a>Baixando</a>
             )
         }
     }else{

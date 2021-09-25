@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Box from "../Box";
 import htmlDecoderService from "../../services/htmlDecoderService";
 import questionsType from '../../enums/questionsTypeEnum'
@@ -8,21 +8,24 @@ import styles from "./style";
 
 export default ({quest, questNumber, nextQuestion}) =>{    
     const { category, multiple, difficulty, question, type, incorrect_answers, correct_answer } = quest;
-    const [allAnswers] = useState(() => {
-        let allAnswers = [...incorrect_answers]
-        allAnswers.push(correct_answer)
-        return allAnswers
+    const [allAwnsers, setAllAwnsers] = useState(() => {
+        let p = [...incorrect_answers]
+        p.push(correct_answer)
+        return p.shuffle()
     })
-    const [selectedAnwser, setSelectedAwnser] = useState(allAnswers[0]);
+
+    const [selectedAnwser, setSelectedAwnser] = useState(allAwnsers[0]);
     const [lock, setLock] = useState(false)
     const [result, setResult] = useState(null)
 
-    const reloadQuest = () =>{
-        setSelectedAwnser(allAnswers[0]);
+    useEffect(() => {
+        setSelectedAwnser(allAwnsers[0]);
         setLock(false);
         setResult(null);
-        nextQuestion();
-    }
+        let p = [...incorrect_answers]
+        p.push(correct_answer)
+        setAllAwnsers(p.shuffle())
+    }, [questNumber])
 
     const style = styles();
 
@@ -42,11 +45,11 @@ export default ({quest, questNumber, nextQuestion}) =>{
                 return (
                     <>
                         <RadioGroup 
-                        defaultValue={allAnswers[0]}
+                        defaultValue={allAwnsers[0]}
                         onChange={(e) => setSelectedAwnser(e.target.value)}
                         value={selectedAnwser}
                         >
-                            {allAnswers.map(awnser => {
+                            {allAwnsers.map(awnser => {
                                 if(awnser === correct_answer && lock === true){
                                     return (<FormControlLabel className={style.radioContainer} disabled={lock} style={{backgroundColor:'#2ECC71'}} key={awnser} value={awnser} control={<Radio disabled={lock}/>} label={htmlDecoderService(awnser)} /> )
                                 }else if(awnser === selectedAnwser && lock === true){
@@ -102,7 +105,7 @@ export default ({quest, questNumber, nextQuestion}) =>{
                 size="large"
                 variant="contained" 
                 color="primary"
-                onClick={reloadQuest}
+                onClick={nextQuestion}
             >
                 Next
             </NextButton>}

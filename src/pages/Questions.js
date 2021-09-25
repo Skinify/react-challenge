@@ -17,7 +17,6 @@ export default () => {
     const downloadQuestions = async (n) =>{
         setLoading(true)
         const resp = await axios.get(`${endpoints.QUESTIONS_ENDPOINT}amount=${n}`)
-        console.log(resp);
         setAllQuestions(resp.data.results);
         setLoading(false)
     }

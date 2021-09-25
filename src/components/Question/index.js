@@ -17,6 +17,13 @@ export default ({quest, questNumber, nextQuestion}) =>{
     const [lock, setLock] = useState(false)
     const [result, setResult] = useState(null)
 
+    const reloadQuest = () =>{
+        setSelectedAwnser(allAnswers[0]);
+        setLock(false);
+        setResult(null);
+        nextQuestion();
+    }
+
     const style = styles();
 
     const displayResult = () => {
@@ -95,7 +102,7 @@ export default ({quest, questNumber, nextQuestion}) =>{
                 size="large"
                 variant="contained" 
                 color="primary"
-                onClick={nextQuestion}
+                onClick={reloadQuest}
             >
                 Next
             </NextButton>}

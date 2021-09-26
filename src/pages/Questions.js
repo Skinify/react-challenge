@@ -12,7 +12,7 @@ export default () => {
     const { questionsNumber } = useParams();
     const [ allQuestions, setAllQuestions ] = useState([])
     const [ loading, setLoading ] = useState(false);
-    const [ currentQuest, setCurrentQuest ] = useState(1);
+    const [ currentQuest, setCurrentQuest ] = useState(0);
     const [ mistakes, setMistakes ] = useState()
     const [ hits, setHit ] = useState()
     const [ questReport, setReport ] = useState([])
@@ -34,7 +34,7 @@ export default () => {
         downloadQuestions(questionsNumber)
     }
 
-    if(currentQuest === allQuestions.length)
+    if(currentQuest === allQuestions.length && loading === false && allQuestions.length !== 0)
     {
         reportContext(questReport)
         return (

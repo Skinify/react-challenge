@@ -111,7 +111,7 @@ export default ({quest, questNumber, nextQuestion, questReport, setReport, mista
             initial={{  opacity: 0 }}
             animate={{ opacity: 1  }}
             exit={{ opacity: 0 }}
-            title={`${questNumber}. ${htmlDecoderService(question)}`}
+            title={`${questNumber + 1}. ${htmlDecoderService(question)}`}
             subtitle={htmlDecoderService(category)}
         >
             {handleQuestType(type)}

@@ -61,7 +61,7 @@ const Report = () =>{
                     {report.map((e, i) => {
                         return (
                             <ListItem key={i} className={style.list} style={{backgroundColor: e.correct_answer === e.selectedAnwser ? '#2ECC71' : '#C0392B'}}>
-                                <ListItemText primary={`${e.questNumber}. ${e.question}`}/>
+                                <ListItemText primary={`${e.questNumber + 1}. ${e.question}`}/>
                                 <Typography variant="subtitle2">Awnser: {e.correct_answer}</Typography>
                                 <Typography variant="subtitle2">Selected: {e.selectedAnwser}</Typography>
                             </ListItem>

@@ -26,6 +26,12 @@ code {
   color: white;
 }
 
+@media only screen and (max-width: 600px) {
+  #root {
+    align-items: initial;
+  }
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;

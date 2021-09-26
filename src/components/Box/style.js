@@ -5,7 +5,8 @@ export default makeStyles({
         backgroundColor: '#384375',
         display: 'flex',
         flexDirection: 'column',
-        width: '40%',
+        //width: '40%',
+        justifyContent:'center',
         padding:'4%',
         borderRadius: '6px',
         boxShadow: '0px 0px 60px 0px #02020254'

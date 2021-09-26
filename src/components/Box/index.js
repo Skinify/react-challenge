@@ -1,11 +1,15 @@
 import styles from './style'
 import { motion } from 'framer-motion';
-import Typography from '@material-ui/core/Typography';
+import { Typography, useMediaQuery}  from '@material-ui/core';
 
 export default (props) => {
   const style = styles();
+  const match = useMediaQuery('(min-width:600px)')
   return (
-    <motion.div className={style.container} {...props}>
+    <motion.div style={{
+      width: match ? '40%' : 'initial',
+      height: match ? 'initial' : '100vh'
+      }}  className={style.container} {...props}>
       {
         ( props.title || props.subtitle ) && 
         <div style={{marginBottom:"6%"}}>

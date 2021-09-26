@@ -5,12 +5,18 @@ import questionsValidatorService from '../services/questionsValidatorService'
 import endpoints from '../config/endpoints.json'
 import Loading from '../components/Loading'
 import axios from 'axios';
+import {useReportContext} from '../context/ReportContext'
+
 
 export default () => {
     const { questionsNumber } = useParams();
     const [ allQuestions, setAllQuestions ] = useState([])
     const [ loading, setLoading ] = useState(false);
     const [ currentQuest, setCurrentQuest ] = useState(1);
+    const [ mistakes, setMistakes ] = useState()
+    const [ hits, setHit ] = useState()
+    const [ questReport, setReport ] = useState([])
+    const reportContext = useReportContext().setReport;
 
     const downloadQuestions = async (n) =>{
         setLoading(true)
@@ -27,10 +33,20 @@ export default () => {
     if(allQuestions.length === 0 && loading === false){
         downloadQuestions(questionsNumber)
     }
+
+    if(currentQuest === allQuestions.length)
+    {
+        localStorage.setItem("report", JSON.stringify(questReport))
+        reportContext(questReport)
+        return (
+            <Redirect to='/report'/>
+        )
+    }
+        
     
     if(allQuestions.length > 0 && loading === false){
         return(
-            <Question questNumber={currentQuest} quest={allQuestions[currentQuest]} nextQuestion={() => setCurrentQuest(currentQuest + 1)}/>
+            <Question questNumber={currentQuest} questReport={questReport} setReport={setReport} mistakes={mistakes} setMistakes={setMistakes} hits={hits} setHit={setHit} quest={allQuestions[currentQuest]} nextQuestion={() => setCurrentQuest(currentQuest + 1)}/>
         )
     }else{
         return (

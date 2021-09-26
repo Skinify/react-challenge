@@ -6,7 +6,7 @@ import {Radio, RadioGroup, FormControlLabel, ButtonGroup, Button, Typography} fr
 import NextButton from "../NextButton";
 import styles from "./style";
 
-export default ({quest, questNumber, nextQuestion}) =>{    
+export default ({quest, questNumber, nextQuestion, questReport, setReport, mistakes, setMistakes, hits, setHit}) =>{    
     const { category, multiple, difficulty, question, type, incorrect_answers, correct_answer } = quest;
     const [allAwnsers, setAllAwnsers] = useState(() => {
         let p = [...incorrect_answers]
@@ -28,6 +28,25 @@ export default ({quest, questNumber, nextQuestion}) =>{
     }, [questNumber])
 
     const style = styles();
+
+    const nextQuestionWrapper = () => {
+        if(result)
+            setHit(hits + 1)
+        else
+            setMistakes(mistakes + 1)
+        
+        let reports = [...questReport]
+        reports.push({
+            selectedAnwser,
+            question,
+            questNumber,
+            correct_answer
+        })
+
+        setReport([...reports])
+
+        nextQuestion()
+    }
 
     const handleQuestType = (questType) =>{
         switch(questType){
@@ -101,7 +120,7 @@ export default ({quest, questNumber, nextQuestion}) =>{
                 size="large"
                 variant="contained" 
                 color="primary"
-                onClick={nextQuestion}
+                onClick={nextQuestionWrapper}
             >
                 Next
             </NextButton>}

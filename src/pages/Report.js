@@ -1,12 +1,25 @@
 import { useState } from "react"
-import { Redirect } from "react-router"
+import { Redirect, useHistory, useParams } from "react-router-dom"
 import Box from "../components/Box"
+import {List, ListItem, ListItemText, Typography, makeStyles} from '@material-ui/core'
 import NextButton from "../components/NextButton"
 import {useReportContext} from '../context/ReportContext'
 
 const Report = () =>{
-    const [ready, setReady] = useState(false)
-    const {report, setReport} = useReportContext();
+    const {seePrevious} = useParams()
+    const [ready, setReady] = useState(seePrevious ? true : false)
+    const {report} = useReportContext();
+    const useStyle = makeStyles({
+        list:{
+            flexDirection:'column',
+            alignItems:'start',
+            marginBottom:'2%',
+            borderRadius:'6px'
+        }
+    });
+
+    const style = useStyle()
+    const history = useHistory()
 
     if(report.length === 0)
         return <Redirect to="/level"/>
@@ -30,10 +43,42 @@ const Report = () =>{
                 </NextButton>
             </Box>
         )    
-    else
+    else{
+        let hits = 0;
+        report.forEach(e => {
+            if(e.selectedAnwser === e.correct_answer)
+                hits++
+        })
         return (
-            <a>AAAAAA</a>
+            <Box 
+            initial={{  opacity: 0 }}
+            animate={{ opacity: 1  }}
+            exit={{ opacity: 0 }}
+            title={`Congratulations you got ${hits} out of ${report.length}`}
+            subtitle="Review the questions below"
+            >
+                <List>
+                    {report.map((e, i) => {
+                        return (
+                            <ListItem key={i} className={style.list} style={{backgroundColor: e.correct_answer === e.selectedAnwser ? '#2ECC71' : '#C0392B'}}>
+                                <ListItemText primary={`${e.questNumber}. ${e.question}`}/>
+                                <Typography variant="subtitle2">Awnser: {e.correct_answer}</Typography>
+                                <Typography variant="subtitle2">Selected: {e.selectedAnwser}</Typography>
+                            </ListItem>
+                        )
+                    })}
+                </List>
+                <NextButton
+                    size="large"
+                    variant="contained" 
+                    color="primary"
+                    onClick={() => history.push('/level')}
+                >
+                    Try again
+                </NextButton>
+            </Box>
         )
+    }
 }
 
 export default Report

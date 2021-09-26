@@ -24,6 +24,7 @@ const App = () => {
             <Route path="/questions/" exact render={() =>history.push('/level')}/>
             <Route path="/questions/:questionsNumber" exact component={Questions} />
             <Route path="/report" exact component={Report} />
+            <Route path="/report/:seePrevious" exact component={Report} />
             <Route path="/oops" exact component={Wrong} />
             <Route path='*' exact render={() =>history.push('/')}/>
         </Switch>

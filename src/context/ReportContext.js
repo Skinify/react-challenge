@@ -11,7 +11,13 @@ const getReportFromStorage = () =>{
 
 const ReportProvider = ({children}) =>{
     
-    const [report, setReport] = useState(getReportFromStorage())
+    const [report, setReportState] = useState(getReportFromStorage())
+
+    const setReport = (e) =>{
+        setReportState(e)
+        localStorage.setItem("report", JSON.stringify(e))
+    } 
+
     return(
         <Context.Provider value={{
             report,

@@ -36,7 +36,6 @@ export default () => {
 
     if(currentQuest === allQuestions.length)
     {
-        localStorage.setItem("report", JSON.stringify(questReport))
         reportContext(questReport)
         return (
             <Redirect to='/report'/>

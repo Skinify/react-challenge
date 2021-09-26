@@ -1,11 +1,13 @@
 import { Button, makeStyles } from "@material-ui/core"
 import Box from "../components/Box"
 import { useHistory, useParams, Redirect } from "react-router-dom"
+import {useReportContext} from '../context/ReportContext'
 import questionsValidatorService from '../services/questionsValidatorService'
 
 export default () => {
     const history = useHistory()
     const { questionsNumber } = useParams();
+    const { setReport } = useReportContext()
     const pageStyle = makeStyles({
         buttonContainer:{
             display: 'flex',
@@ -41,7 +43,7 @@ export default () => {
                     size="large"
                     variant="contained" 
                     color="primary"
-                    onClick={() => history.push(`/Questions/${questionsNumber}`)}
+                    onClick={() => { setReport([]); history.push(`/Questions/${questionsNumber}` )}}
                 >
                     Start
                 </Button>

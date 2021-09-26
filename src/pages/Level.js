@@ -1,6 +1,6 @@
 import Box from '../components/Box'
 import { useState } from 'react';
-import {Radio, RadioGroup, FormControlLabel, TextField, FormLabel} from '@material-ui/core';
+import {Radio, RadioGroup, FormControlLabel, TextField} from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import NextButton from '../components/NextButton';
 import questionsEnum from '../enums/questionsDifficultEnum';
@@ -73,7 +73,7 @@ export default () =>{
                         size="large"
                         variant="contained" 
                         color="primary"
-                        onClick={() => history.push(`/Questions/${questionsNumber}`)}
+                        onClick={() => history.push(`/confirm/${questionsNumber}`)}
                         >
                         Next
                 </NextButton>

@@ -1,4 +1,4 @@
 export default {
-    MULTIPLE: "multiple",
-    BOOLEAN: "boolean",
-}
+  MULTIPLE: "multiple",
+  BOOLEAN: "boolean",
+};

@@ -1,6 +1,6 @@
 export default {
-    EASY: "easy",
-    NORMAL: "normal",
-    HARD: "hard",
-    CUSTOM: "custom"
-}
+  EASY: "easy",
+  NORMAL: "normal",
+  HARD: "hard",
+  CUSTOM: "custom",
+};
